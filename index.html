@@ -110,9 +110,9 @@
         }
         createScene = function() { return Playground.CreateScene(engine, engine.getRenderingCanvas()); }
                 window.initFunction = async function() {
-                    
-                    
-                    
+
+
+
                     var asyncEngineCreation = async function() {
                         try {
                         return createDefaultEngine();
@@ -123,8 +123,8 @@
                     }
 
                     window.engine = await asyncEngineCreation();
-                    
-                    
+
+
         if (!engine) throw 'engine should not be null.';
         startRenderLoop(engine, canvas);
 window.scene = createScene();};
