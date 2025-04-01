@@ -19,6 +19,13 @@
   "homepage": "https://github.com/makayun/baby#readme",
   "devDependencies": {
     "@babylonjs/core": "^8.0.2",
+    "@babylonjs/gui": "^8.0.2",
+    "@babylonjs/inspector": "^8.0.2",
+    "@babylonjs/loaders": "^8.0.2",
+    "@babylonjs/materials": "^8.0.2",
+    "@babylonjs/post-processes": "^8.0.2",
+    "@babylonjs/procedural-textures": "^8.0.2",
+    "@babylonjs/serializers": "^8.0.2",
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^9.23.0",
     "file-loader": "^6.2.0",
