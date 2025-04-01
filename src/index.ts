@@ -1,15 +1,18 @@
-import * as BABYLON from "babylonjs";
+import { Engine, Scene, ArcRotateCamera, HemisphericLight, MeshBuilder, Vector3 } from "babylonjs";
 
-const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement | null;
+const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
+const engine = new Engine(canvas, true);
+const scene = new Scene(engine);
+const camera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 10, Vector3.Zero(), scene);
+camera.attachControl(canvas, true);
 
-if (!canvas) {
-    throw new Error("Canvas element not found!");
-}
-
-const engine = new BABYLON.Engine(canvas, true);
-
-const scene: BABYLON.Scene = new BABYLON.Scene(engine);
+const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+const sphere = MeshBuilder.CreateSphere("sphere", { diameter: 2 }, scene);
 
 engine.runRenderLoop(() => {
-	scene.render();
+    scene.render();
+});
+
+window.addEventListener("resize", () => {
+    engine.resize();
 });

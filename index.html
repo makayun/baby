@@ -1,142 +1,16 @@
 <!doctype html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-        <title>Babylon.js sample code</title>
-
-        <!-- Babylon.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
-        <script src="https://assets.babylonjs.com/generated/Assets.js"></script>
-        <script src="https://cdn.babylonjs.com/recast.js"></script>
-        <script src="https://cdn.babylonjs.com/ammo.js"></script>
-        <script src="https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script>
-        <script src="https://cdn.babylonjs.com/cannon.js"></script>
-        <script src="https://cdn.babylonjs.com/Oimo.js"></script>
-        <script src="https://cdn.babylonjs.com/earcut.min.js"></script>
-        <script src="https://cdn.babylonjs.com/babylon.js"></script>
-        <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-        <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
-        <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
-        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script>
-        <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-        <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
-        <script src="https://cdn.babylonjs.com/addons/babylonjs.addons.min.js"></script>
-        <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
-
-        <style>
-            html,
-            body {
-                overflow: hidden;
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-
-            #renderCanvas {
-                width: 100%;
-                height: 100%;
-                touch-action: none;
-            }
-
-            #canvasZone {
-                width: 100%;
-                height: 100%;
-            }
-        </style>
-    </head>
-    <body>
-        <canvas id="canvas"></canvas>
-        <!-- <div id="canvasZone"><canvas id="renderCanvas"></canvas></div> -->
-        <script> "src/index.ts" </script>
-        <!-- <script>
-                    var canvas = document.getElementById("renderCanvas");
-
-                    var startRenderLoop = function (engine, canvas) {
-                        engine.runRenderLoop(function () {
-                            if (sceneToRender && sceneToRender.activeCamera) {
-                                sceneToRender.render();
-                            }
-                        });
-                    }
-
-                    var engine = null;
-        var scene = null;
-        var sceneToRender = null;
-        var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
-        class Playground {
-            static CreateScene(engine, canvas) {
-                // This creates a basic Babylon Scene object (non-mesh)
-                const scene = new BABYLON.Scene(engine);
-                /**** Set camera and light *****/
-                var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(160), BABYLON.Tools.ToRadians(57), 10, BABYLON.Vector3.Zero(), scene);
-                camera.attachControl(canvas, true);
-                const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0));
-                const groundMat = new BABYLON.StandardMaterial("grass");
-                groundMat.diffuseColor = BABYLON.Color3.Green();
-                // var box2 = box.clone();
-                // box2.position.y = 2;
-                // box2.scaling = new BABYLON.Vector3(1, 1.5, 1);
-                // box2.rotation.y = BABYLON.Tools.ToRadians(90);
-                const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 10, height: 10 });
-                ground.material = groundMat;
-                const house_w = 1;
-                const houses = [];
-                for (let i = 0; i < 4; i++) {
-                    houses.push(new House(house_w, 1, i * house_w, 0));
-                }
-                return scene;
-            }
-        }
-        class House {
-            constructor(w, h, x, z) {
-                const roofMat = new BABYLON.StandardMaterial("roofMat");
-                roofMat.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/roof.jpg");
-                const boxMat = new BABYLON.StandardMaterial("boxMat");
-                boxMat.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/cubehouse.png");
-                const faceUV = [];
-                faceUV[0] = new BABYLON.Vector4(0.5, 0.0, 0.75, 1.0); //rear face
-                faceUV[1] = new BABYLON.Vector4(0.0, 0.0, 0.25, 1.0); //front face
-                faceUV[2] = new BABYLON.Vector4(0.25, 0, 0.5, 1.0); //right side
-                faceUV[3] = new BABYLON.Vector4(0.75, 0, 1.0, 1.0); //left side
-                const box = BABYLON.MeshBuilder.CreateBox("box", { height: h, width: w, faceUV: faceUV, wrap: true });
-                box.position = new BABYLON.Vector3(x, h * 0.5, z);
-                const roof = BABYLON.MeshBuilder.CreateCylinder("roof", { diameter: 1.3, height: w, tessellation: 3, });
-                roof.scaling.x = 0.75;
-                roof.rotation.z = Math.PI / 2;
-                roof.position = new BABYLON.Vector3(x, h + 0.24, z);
-                box.material = boxMat;
-                roof.material = roofMat;
-            }
-        }
-        createScene = function() { return Playground.CreateScene(engine, engine.getRenderingCanvas()); }
-                window.initFunction = async function() {
-
-
-
-                    var asyncEngineCreation = async function() {
-                        try {
-                        return createDefaultEngine();
-                        } catch(e) {
-                        console.log("the available createEngine function failed. Creating the default engine instead");
-                        return createDefaultEngine();
-                        }
-                    }
-
-                    window.engine = await asyncEngineCreation();
-
-
-        if (!engine) throw 'engine should not be null.';
-        startRenderLoop(engine, canvas);
-window.scene = createScene();};
-        initFunction().then(() => {sceneToRender = scene
-                    });
-
-                    // Resize
-                    window.addEventListener("resize", function () {
-                        engine.resize();
-                    });
-        </script> -->
-    </body>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Mighty Pong</title>
+		<style>
+			html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+			canvas {display: block;}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" style="width: 100%; height: 100%;"></canvas>
+		<script type="module" src="./src/index.ts"></script>
+	</body>
 </html>
