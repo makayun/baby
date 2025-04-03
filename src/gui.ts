@@ -3,17 +3,17 @@ import * as GUI from "babylonjs-gui"
 
 let advancedTexture: GUI.AdvancedDynamicTexture;
 
-function init(): void {
+// This must be added in the beginning of every function that creates a GUI element!!!
+function guiInit(): void {
     if (!advancedTexture) {
         advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
     }
 }
 
-export function createSimpleButton(name: string, text: string) : GUI.Button {
-    if (!advancedTexture)
-        init();
+export function createSimpleButton(text: string) : GUI.Button {
+    guiInit();
 
-    const button = GUI.Button.CreateSimpleButton(name, text);
+    const button = GUI.Button.CreateSimpleButton(`${text}_btn`, text);
     button.width = '200px';
     button.height = '40px';
     button.color = 'white';
@@ -22,11 +22,10 @@ export function createSimpleButton(name: string, text: string) : GUI.Button {
     return (button);
 }
 
-export function createImageButton(name: string, text: string, imageUrl: string ) {
-    if (!advancedTexture)
-        init();
+export function createImageButton(text: string, imageUrl: string) {
+    guiInit();
 
-    const button = GUI.Button.CreateImageButton(name, text, imageUrl);
+    const button = GUI.Button.CreateImageButton(`${text}_imgbtn`, text, imageUrl);
     button.width = '200px';
     button.height = '40px';
     button.color = 'white';
@@ -37,12 +36,42 @@ export function createImageButton(name: string, text: string, imageUrl: string )
     return (button);
 }
 
+export function createTextBlock(in_text: string, in_color: string, in_fontSize: number) : GUI.TextBlock {
+    guiInit();
+
+    const text_block = new GUI.TextBlock();
+    text_block.text = in_text;
+    text_block.color = in_color;
+    text_block.fontSize = in_fontSize;
+    text_block.fontFamily = 'Montserrat Black';
+    text_block.shadowColor = '#000';
+    text_block.shadowOffsetX = 2;
+    text_block.shadowOffsetY = 2;
+    advancedTexture.addControl(text_block);
+
+    return (text_block);
+}
+
+export function createInputText(in_text?: string) : GUI.InputText {
+    guiInit();
+
+    const inputTextBlock = new GUI.InputText(`${in_text}_inputtxt`, in_text);
+    inputTextBlock.width = 0.2;
+    inputTextBlock.height = '40px';
+    inputTextBlock.color = 'black';
+    inputTextBlock.background = 'deepskyblue';
+    inputTextBlock.focusedBackground = 'white';
+
+    advancedTexture.addControl(inputTextBlock);
+
+    return inputTextBlock;
+}
+
 
 
 export function addLabelToMesh(mesh: AbstractMesh): void {
-    if (!advancedTexture) {
-        init();
-    }
+    guiInit();
+
     let label: GUI.Rectangle = new GUI.Rectangle("label for " + mesh.name);
     label.background = "black";
     label.height = "30px";

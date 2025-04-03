@@ -4,12 +4,11 @@ module.exports = {
     entry: './src/index.ts',
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: ''
     },
-    externals: {
-        "oimo": true,
-        "cannon": true,
-        "earcut": true
+    devServer: {
+        static: './dist',
     },
     resolve: {
         extensions: [".ts"]

@@ -1,5 +1,6 @@
 import * as GUI from "./gui";
 import * as BABYLON from "babylonjs"
+import { InputText } from "babylonjs-gui";
 
 const assets_folder = "../assets";
 
@@ -48,12 +49,18 @@ export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLO
 
 
     // GUI.addLabelToMesh(sphere);
-    const random_color_btn = GUI.createSimpleButton("random_color_btn", "Click me!");
-    random_color_btn.onPointerClickObservable.add(function() {
-        metal3.albedoColor = BABYLON.Color3.Random();
-        metal2.albedoColor = BABYLON.Color3.Random();
+    // const random_color_btn = GUI.createSimpleButton("Click me!");
+    // random_color_btn.onPointerClickObservable.add(function() {
+    //     metal3.albedoColor = BABYLON.Color3.Random();
+    //     metal2.albedoColor = BABYLON.Color3.Random();
+    // })
+    // GUI.createImageButton("Play", "./assets/play-button.svg")
+    // GUI.createTextBlock('Hello, Babylon!', 'white', 40);
+    const inputTextBlock = GUI.createInputText('0.1');
+    inputTextBlock.onEnterPressedObservable.add(function (value) {
+        if (value instanceof InputText)
+            console.log(value.text);
     })
-    // GUI.createImageButton("play_btn", "Play", "./assets/play-button.svg")
 
     scene.executeWhenReady(() => {
         engine.hideLoadingUI();
