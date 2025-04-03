@@ -2,8 +2,8 @@ import * as GUI from "./gui";
 import * as BABYLON from "babylonjs"
 import { InputText } from "babylonjs-gui";
 
-const basePath = window.location.pathname.replace(/\/[^/]*$/, "/");
-const assets_folder = `${basePath}/assets`;
+
+const assets_folder = "/assets";
 
 export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLON.Scene {
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
