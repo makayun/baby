@@ -1,23 +1,23 @@
-import { Engine, Scene, ArcRotateCamera, Vector3, MeshBuilder } from "babylonjs";
-import { addLabelToMesh } from "./gui";
+import * as GUI from "./gui";
 import * as BABYLON from "babylonjs"
 
-export function createScene(engine: Engine, canvas: HTMLElement): Scene {
-    var scene: Scene = new Scene(engine);
+const assets_folder = "../assets";
 
-    var camera: ArcRotateCamera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
+export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLON.Scene {
+    var scene: BABYLON.Scene = new BABYLON.Scene(engine);
+
+    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 2, -15), scene);
     camera.attachControl(canvas, true);
 
-    var sphere = MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
-    // var sphere2 = MeshBuilder.CreateSphere("sphere2", {diameter: 2, segments: 32}, scene);
-    // var sphere3 = MeshBuilder.CreateSphere("sphere3", {diameter: 2, segments: 32}, scene);
+    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
 	var sphere2 = sphere.clone();
 	var sphere3 = sphere.clone();
-    const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("../assets/sky2.dds", scene);
-    const skybox = scene.createDefaultSkybox(hdrTexture, true, 10000);
+    const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(`${assets_folder}/sky1.dds`, scene);
+    const skybox : BABYLON.AbstractMesh | any = scene.createDefaultSkybox(hdrTexture, true, 10000);
 
     var probe = new BABYLON.ReflectionProbe("main", 512, scene);
-    probe.renderList.push(sphere2, sphere3, skybox);
+    if (probe.renderList)
+        probe.renderList.push(sphere2, sphere3, skybox);
 
     var metal = new BABYLON.PBRMaterial('metal', scene);
     metal.reflectionTexture = probe.cubeTexture;
@@ -47,7 +47,13 @@ export function createScene(engine: Engine, canvas: HTMLElement): Scene {
     })
 
 
-    addLabelToMesh(sphere);
+    // GUI.addLabelToMesh(sphere);
+    const random_color_btn = GUI.createSimpleButton("random_color_btn", "Click me!");
+    random_color_btn.onPointerClickObservable.add(function() {
+        metal3.albedoColor = BABYLON.Color3.Random();
+        metal2.albedoColor = BABYLON.Color3.Random();
+    })
+    // GUI.createImageButton("play_btn", "Play", "./assets/play-button.svg")
 
     scene.executeWhenReady(() => {
         engine.hideLoadingUI();
