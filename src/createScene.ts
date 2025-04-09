@@ -1,8 +1,9 @@
 import * as GUI from "./gui";
 import * as BABYLON from "babylonjs"
 // import { InputText } from "babylonjs-gui";
-import plyBtn from "./assets/play-button.svg"
-import sky1 from "./assets/sky1.dds"
+// import plyBtn from "./assets/play-button.svg"
+
+import { ddsAssets } from "./import_assets";
 
 export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLON.Scene {
     let scene: BABYLON.Scene = new BABYLON.Scene(engine);
@@ -14,7 +15,8 @@ export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLO
 	let sphere2 = sphere.clone();
 	let sphere3 = sphere.clone();
 
-    const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(sky1, scene);
+    // const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(sky1, scene);
+    const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(ddsAssets['sky1'], scene);
     const skybox : BABYLON.AbstractMesh | any = scene.createDefaultSkybox(hdrTexture, true, 10000);
 
     let probe = new BABYLON.ReflectionProbe("main", 512, scene);

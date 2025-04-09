@@ -11,7 +11,7 @@
 		"target": "ES6",
 		"module": "ES6",
 		"outDir": "./dist",
-		"types": ["babylonjs", "babylonjs-gui"]
+		"types": ["babylonjs", "babylonjs-gui", "webpack-env"]
 	},
 	"include": [
 		"src"
