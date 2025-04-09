@@ -13,7 +13,7 @@ module.exports = {
         static: './dist',
     },
     resolve: {
-        extensions: [".ts", ".ico"]
+        extensions: [".ts"]
     },
     module: {
         rules: [
