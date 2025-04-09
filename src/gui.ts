@@ -27,11 +27,13 @@ export function createImageButton(text: string, imageUrl: string) {
 
     const button = GUI.Button.CreateImageButton(`${text}_imgbtn`, text, imageUrl);
     button.width = 0.2;
-    button.height = '40px';
+    button.height = 0.04;
     button.color = 'white';
     button.background = 'deepskyblue';
     if (button.image)
-        button.image.left = '30px';
+        button.image.left = '5%';
+    if (button.textBlock != undefined)
+        button.textBlock.fontSize = '50%';
     advancedTexture.addControl(button);
     return (button);
 }

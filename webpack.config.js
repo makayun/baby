@@ -5,6 +5,7 @@ module.exports = {
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
+        assetModuleFilename: 'assets/[name][ext]',
         publicPath: ''
     },
     devServer: {
@@ -15,7 +16,8 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.tsx?$/, loader: "ts-loader" }
+            { test: /\.tsx?$/, loader: "ts-loader" },
+            { test: /\.(svg|dds)/, type: 'asset/resource'}
         ]
     },
     mode: "development"

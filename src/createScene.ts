@@ -1,9 +1,8 @@
-// import * as GUI from "./gui";
+import * as GUI from "./gui";
 import * as BABYLON from "babylonjs"
 // import { InputText } from "babylonjs-gui";
-
-
-const assets_folder = "/assets";
+import plyBtn from "./assets/play-button.svg"
+import sky1 from "./assets/sky1.dds"
 
 export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLON.Scene {
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
@@ -14,7 +13,8 @@ export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLO
     var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
 	var sphere2 = sphere.clone();
 	var sphere3 = sphere.clone();
-    const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(`${assets_folder}/sky1.dds`, scene);
+
+    const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(sky1, scene);
     const skybox : BABYLON.AbstractMesh | any = scene.createDefaultSkybox(hdrTexture, true, 10000);
 
     var probe = new BABYLON.ReflectionProbe("main", 512, scene);
@@ -39,6 +39,8 @@ export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLO
     sphere3.setPivotMatrix(BABYLON.Matrix.Translation(6, 1, 0), false);
     sphere3.material = new BABYLON.PBRMaterial('metal', scene);
     (sphere3.material as BABYLON.PBRMaterial).roughness = 0.1;
+    (sphere3.material as BABYLON.PBRMaterial).metallic = 0.3;
+    (sphere3.material as BABYLON.PBRMaterial).albedoColor = new BABYLON.Color3(0.3, 0.0, 0.8);
     // var metal3 = new BABYLON.PBRMaterial('metal', scene);
     // metal3.roughness = 0.1;
     // metal3.metallic = 0.3;
@@ -58,6 +60,7 @@ export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLO
     //     metal2.albedoColor = BABYLON.Color3.Random();
     // })
     // GUI.createImageButton("Play", "./assets/play-button.svg")
+    GUI.createImageButton("Play", plyBtn);
     // GUI.createTextBlock('Hello, Babylon!', 'white', 40);
     // const inputTextBlock = GUI.createInputText('0.1');
     // inputTextBlock.onEnterPressedObservable.add(function (value) {
