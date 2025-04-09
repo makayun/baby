@@ -14,7 +14,7 @@ export function createSimpleButton(text: string) : GUI.Button {
     guiInit();
 
     const button = GUI.Button.CreateSimpleButton(`${text}_btn`, text);
-    button.width = '200px';
+    button.width = 0.2;
     button.height = '40px';
     button.color = 'white';
     button.background = 'deepskyblue';
@@ -26,7 +26,7 @@ export function createImageButton(text: string, imageUrl: string) {
     guiInit();
 
     const button = GUI.Button.CreateImageButton(`${text}_imgbtn`, text, imageUrl);
-    button.width = '200px';
+    button.width = 0.2;
     button.height = '40px';
     button.color = 'white';
     button.background = 'deepskyblue';
@@ -67,6 +67,31 @@ export function createInputText(in_text?: string) : GUI.InputText {
     return inputTextBlock;
 }
 
+export function createSlider(in_min: number, in_max: number) : GUI.Slider {
+    guiInit();
+
+    let slider = new GUI.Slider;
+    slider.minimum = in_min;
+    slider.maximum = in_max;
+    slider.width = 0.2;
+    slider.height = '20px';
+    slider.value = in_min;
+    advancedTexture.addControl(slider);
+
+    return slider;
+}
+
+export function createPicker() {
+    guiInit();
+
+    const picker = new GUI.ColorPicker;
+    advancedTexture.addControl(picker);
+    return picker;
+}
+
+// export function createCheckbox() {
+
+// }
 
 
 export function addLabelToMesh(mesh: AbstractMesh): void {

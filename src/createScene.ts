@@ -1,6 +1,6 @@
-import * as GUI from "./gui";
+// import * as GUI from "./gui";
 import * as BABYLON from "babylonjs"
-import { InputText } from "babylonjs-gui";
+// import { InputText } from "babylonjs-gui";
 
 
 const assets_folder = "/assets";
@@ -37,11 +37,13 @@ export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLO
     sphere2.material = metal2;
 
     sphere3.setPivotMatrix(BABYLON.Matrix.Translation(6, 1, 0), false);
-    var metal3 = new BABYLON.PBRMaterial('metal', scene);
-    metal3.roughness = 0.1;
-    metal3.metallic = 0.3;
-    metal3.albedoColor = new BABYLON.Color3(0.3, 0.0, 0.8);
-    sphere3.material = metal3;
+    sphere3.material = new BABYLON.PBRMaterial('metal', scene);
+    (sphere3.material as BABYLON.PBRMaterial).roughness = 0.1;
+    // var metal3 = new BABYLON.PBRMaterial('metal', scene);
+    // metal3.roughness = 0.1;
+    // metal3.metallic = 0.3;
+    // metal3.albedoColor = new BABYLON.Color3(0.3, 0.0, 0.8);
+    // sphere3.material = metal3;
 
     scene.registerBeforeRender(function () {
         sphere2.rotation.y += 0.01;
@@ -57,11 +59,19 @@ export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLO
     // })
     // GUI.createImageButton("Play", "./assets/play-button.svg")
     // GUI.createTextBlock('Hello, Babylon!', 'white', 40);
-    const inputTextBlock = GUI.createInputText('0.1');
-    inputTextBlock.onEnterPressedObservable.add(function (value) {
-        if (value instanceof InputText)
-            console.log(value.text);
-    })
+    // const inputTextBlock = GUI.createInputText('0.1');
+    // inputTextBlock.onEnterPressedObservable.add(function (value) {
+    //     if (value instanceof InputText)
+    //         console.log(value.text);
+    // })
+    // const slider = GUI.createSlider(0, 3);
+    // slider.onValueChangedObservable.add(function (value) {
+    //     sphere.position.z = value;
+    // })
+    // const picker = GUI.createPicker();
+    // picker.onValueChangedObservable.add(function (value) {
+    //     metal2.albedoColor.copyFrom(value);
+    // })
 
     scene.executeWhenReady(() => {
         engine.hideLoadingUI();
