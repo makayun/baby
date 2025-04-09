@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
@@ -12,7 +13,7 @@ module.exports = {
         static: './dist',
     },
     resolve: {
-        extensions: [".ts"]
+        extensions: [".ts", ".ico"]
     },
     module: {
         rules: [
@@ -20,5 +21,10 @@ module.exports = {
             { test: /\.(svg|dds)/, type: 'asset/resource'}
         ]
     },
+    plugins: [new HtmlWebpackPlugin({
+        template: "./index.html",
+        favicon: "./favicon.ico"
+
+    })],
     mode: "development"
 };
