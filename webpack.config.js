@@ -18,7 +18,7 @@ module.exports = {
     module: {
         rules: [
             { test: /\.tsx?$/, loader: "ts-loader" },
-            { test: /\.(svg|dds)/, type: 'asset/resource'}
+            { test: /\.(svg|dds|png)/, type: 'asset/resource'}
         ]
     },
     plugins: [new HtmlWebpackPlugin({

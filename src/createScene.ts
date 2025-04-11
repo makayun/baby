@@ -1,8 +1,7 @@
 // import * as GUI from "./gui";
 import * as BABYLON from "babylonjs"
 // import { Control } from "babylonjs-gui";
-import { ddsAssets } from "./import_assets";
-// import { svgAssets } from "./import_assets";
+import { ddsAssets, pngAssets, svgAssets } from "./import_assets";
 
 function createBall(scene: BABYLON.Scene, metal?: BABYLON.PBRMaterial) : BABYLON.Mesh {
     let ball = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
@@ -22,8 +21,15 @@ function createMetal(scene: BABYLON.Scene, probe?: BABYLON.ReflectionProbe) : BA
     return metal;
 }
 
+
 export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLON.Scene {
     let scene: BABYLON.Scene = new BABYLON.Scene(engine);
+    var gravityVector = new BABYLON.Vector3(0,-9.81, 0);
+    var physicsPlugin = new BABYLON.CannonJSPlugin();
+    scene.enablePhysics(gravityVector, physicsPlugin);
+
+
+    const light = new BABYLON.HemisphericLight("light", BABYLON.Vector3.Zero(), scene);
 
     let camera = new BABYLON.ArcRotateCamera("camera", 1, 1, 30, BABYLON.Vector3.Zero(), scene);
     camera.lowerRadiusLimit = 5;
@@ -40,19 +46,30 @@ export function createScene(engine: BABYLON.Engine, canvas: HTMLElement): BABYLO
     const metal = createMetal(scene, probe);
     const ball = createBall(scene, metal);
     camera.parent = ball;
+    light.parent = ball;
     const beh = new BABYLON.BouncingBehavior;
     ball.addBehavior(beh);
-    ball.position.y = 4;
+    ball.position.y = 5;
 
-    const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 10, height: 10}, scene);
-    ground.intersectsMesh(ball);
+    var groundSize = 50;
+    var groundMaxHeight = 2;
 
-    var gravityVector = new BABYLON.Vector3(0, -9.81, 0);
-    var physicsPlugin = new BABYLON.HavokPlugin();
-    scene.enablePhysics(gravityVector, physicsPlugin);
+    // Our built-in 'ground' shape.
+    var ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap("ground", pngAssets["height_map"], {
+        width: groundSize,
+        height: groundSize,
+        maxHeight: groundMaxHeight,
+        subdivisions: 100
+    })
+
+    let gag: BABYLON.PhysicsAggregate;
+    let sag: BABYLON.PhysicsAggregate;
 
     scene.executeWhenReady(() => {
         engine.hideLoadingUI();
+        gag = new BABYLON.PhysicsAggregate(ground, BABYLON.PhysicsShapeType.MESH, {mass: 0}, scene);
+        sag = new BABYLON.PhysicsAggregate(ball, BABYLON.PhysicsShapeType.BOX, {mass: 1}, scene);
+
     })
 
     return scene;
