@@ -1,0 +1,1 @@
+{"version":3,"file":"pongScene.d.ts","sourceRoot":"","sources":["../../src/pongScene.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,iBAAiB,CAAC;AAgBxC,OAAO,EAAE,gBAAgB,EAAE,MAAM,eAAe,CAAC;AAMjD,OAAO,EAAE,cAAc,EAAE,MAAM,wCAAwC,CAAC;AAGxE,qBAAa,SAAU,YAAW,gBAAgB;IAGjD,WAAW,GAAU,QAAQ,cAAc,EAAE,QAAQ,iBAAiB,KAAG,OAAO,CAAC,KAAK,CAAC,CAiFtF;CACD"}
