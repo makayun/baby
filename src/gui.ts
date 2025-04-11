@@ -1,5 +1,5 @@
-import { AbstractMesh } from "babylonjs";
-import * as GUI from "babylonjs-gui"
+import { AbstractMesh } from "@babylonjs/core";
+import * as GUI from "@babylonjs/gui"
 
 let advancedTexture: GUI.AdvancedDynamicTexture;
 

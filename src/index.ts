@@ -1,17 +1,24 @@
-import { Engine, Scene } from "babylonjs";
-import { createScene } from "./createScene"
+import { Engine } from "@babylonjs/core";
+import { getSceneModule } from "./createScene";
 
-var canvas: any = document.getElementById("renderCanvas");
-var engine: Engine = new Engine(canvas, true);
+let engine: Engine;
 
-engine.displayLoadingUI();
+export const babylonInit = async (): Promise<void> => {
+    const createSceneModule = getSceneModule();
+    await Promise.all(createSceneModule.preTasks || []);
+    const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
+    engine = new Engine(canvas, true);
+    const scene = await createSceneModule.createScene(engine, canvas);
 
-var scene: Scene = createScene(engine, canvas);
+    engine.runRenderLoop(function () {
+        scene.render();
+    });
 
-engine.runRenderLoop(() => {
-    scene.render();
-});
+    window.addEventListener("resize", function () {
+        engine.resize();
+    });
+};
 
-window.addEventListener("resize", () => {
-    engine.resize();
+babylonInit().then(() => {
+    engine.displayLoadingUI();
 });

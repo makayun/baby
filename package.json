@@ -2,7 +2,7 @@
   "name": "baby",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "clean": "rm -rf dist",
     "fclean": "rm -rf dist node_modules",
@@ -27,12 +27,16 @@
     "ts-loader": "9.5.2",
     "typescript": "5.8.2",
     "webpack": "5.98.0",
+    "@types/webpack-env": "1.18.8",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
-    "@types/webpack-env": "1.18.8",
-    "babylonjs": "8.0.2",
-    "babylonjs-gui": "8.0.2",
-    "babylonjs-loaders": "8.0.2"
+    "@babylonjs/assets": "^5.20.0",
+    "@babylonjs/core": "^8.0.0",
+    "@babylonjs/gui-editor": "^8.0.0",
+    "@babylonjs/havok": "^1.0.0",
+    "@babylonjs/inspector": "^8.0.0",
+    "@babylonjs/loaders": "^8.0.0",
+    "@babylonjs/materials": "^8.0.0"
   }
 }
